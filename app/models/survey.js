@@ -28,9 +28,9 @@ const surveySchema = new mongoose.Schema({
   },
 });
 
-surveySchema.virtual('length').get(function length() {
-  return this.text.length;
-});
+// surveySchema.virtual('length').get(function length() {
+//   return this.text.length;
+// });
 
 const Survey = mongoose.model('Survey', surveySchema);
 

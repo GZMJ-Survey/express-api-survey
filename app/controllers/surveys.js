@@ -27,6 +27,7 @@ const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
     _owner: req.user._id,
   });
+  console.log(req.body);
   Survey.create(survey)
     .then(survey =>
       res.status(201)
