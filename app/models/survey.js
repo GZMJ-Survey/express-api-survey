@@ -2,20 +2,32 @@
 
 const mongoose = require('mongoose');
 
-const surveySchema = new mongoose.Schema({
-  question: {
+const answerSchema = new mongoose.Schema({
+  response: {
+    type: Boolean,
+    required: false,
+  }
+});
+
+const questionSchema = new mongoose.Schema({
+  problem: {
     type: String,
     required: true,
   },
-  answer: {
-    type: Boolean,
-    required: false,
+  answers: [answerSchema]
+});
+
+const surveySchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
   },
   _owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
+  questions: [questionSchema]
 }, {
   timestamps: true,
   toJSON: {

@@ -10,7 +10,13 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "survey": {
-      "question": "Is it raining?"
+      "title": "Anything",
+      "questions": [{
+        "problem": "Is it Raining?",
+        "answers": [{
+          "response": true
+        }]
+      }]
     }
   }'
 
