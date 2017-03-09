@@ -5,16 +5,17 @@ URL_PATH="/surveys"
 
 curl "${API}${URL_PATH}" \
   --include \
-  --request POST \
+  --request PATCH \
   --header "Content-Type: application/json" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
-    "survey":{
-      "title": "ananan",
+    "survey": {
+      "title": "Anything",
       "questions": [{
-        "problem": "sasjns"
-      }, {
-        "problem": "hello"
+        "problem": "Is it sunny?",
+        "answers": [{
+          "response": false
+        }]
       }]
     }
   }'

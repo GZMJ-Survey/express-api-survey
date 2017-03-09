@@ -7,6 +7,7 @@ const Survey = models.survey;
 const authenticate = require('./concerns/authenticate');
 const setUser = require('./concerns/set-current-user');
 const setModel = require('./concerns/set-mongoose-model');
+const store = require('./store.js');
 
 const index = (req, res, next) => {
   Survey.find()
@@ -27,7 +28,6 @@ const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
     _owner: req.user._id,
   });
-  console.log(req.body);
   Survey.create(survey)
     .then(survey =>
       res.status(201)
@@ -39,9 +39,28 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   delete req.body._owner;  // disallow owner reassignment.
-  req.survey.update(req.body.survey)
-    .then(() => res.sendStatus(204))
-    .catch(next);
+
+  Survey.findById(req.params.id, function (err, survey) {
+    // Handle any possible database errors
+      console.log(survey.questions.length);
+      console.log((survey.questions).push(req.body.survey.questions));
+    if (err) {
+        res.status(500).send(err);
+    } else {
+      // Update each attribute with any possible attribute that may have been submitted in the body of the request
+      // If that attribute isn't in the request body, default back to whatever it was before.
+        survey.questions[survey.questions.length] = req.body.survey.questions;
+    }
+
+      // Save the updated document back to the database
+      survey.save(function (err, survey) {
+            if (err) {
+                res.status(500).send(err);
+            }
+            res.send(survey);
+      });
+
+  });
 };
 
 const destroy = (req, res, next) => {
