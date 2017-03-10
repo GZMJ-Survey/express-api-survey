@@ -13,10 +13,18 @@ curl "${API}${URL_PATH}/${ID}" \
       "title": "somsagnggrgre",
       "questions": [{
         "problem": "Is it sunny?",
-        "answers": [{
+        "answers": {
           "response": false
-        }]
-      }]
+        }
+      },
+      {
+        "problem": "Is it snowing?",
+        "answers": {
+          "response": false
+        }
+      }
+
+      ]
     }
   }'
 

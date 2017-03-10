@@ -38,17 +38,23 @@ const create = (req, res, next) => {
 };
 
 const update = (req, res, next) => {
+  console.log('UPDATE');
   delete req.body._owner;  // disallow owner reassignment.
 
   Survey.findById(req.params.id, function (err, survey) {
     // Handle any possible database errors
-      console.log(survey.questions.length);
-      console.log((survey.questions).push(req.body.survey.questions));
+      // console.log(survey.questions.length);
+      // console.log((survey.questions).push(req.body.survey.questions));
     if (err) {
-        res.status(500).send(err);
+        res.status(422).send(err);
     } else {
       // Update each attribute with any possible attribute that may have been submitted in the body of the request
       // If that attribute isn't in the request body, default back to whatever it was before.
+        // for (let i = 0; i < survey.questions.length; i++) {
+        //   survey.questions[i] =  survey.questions[i];
+        //   console.log(survey.questions[i].answers.response);
+        //
+        // }
         survey.questions[survey.questions.length] = req.body.survey.questions;
     }
 
@@ -63,6 +69,10 @@ const update = (req, res, next) => {
   });
 };
 
+const updateAnswer = () {
+
+}
+
 const destroy = (req, res, next) => {
   req.survey.remove()
     .then(() => res.sendStatus(204))
@@ -74,6 +84,7 @@ module.exports = controller({
   show,
   create,
   update,
+  updateAnswer,
   destroy,
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
