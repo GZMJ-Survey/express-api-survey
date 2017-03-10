@@ -52,19 +52,20 @@ const update = (req, res, next) => {
       // If that attribute isn't in the request body, default back to whatever it was before.
 
       // make an if to see if ownership is needed. If so, only create question
-    if (req.survey._owner === req.user.id) {
+    // if (req.survey._owner === req.user.id) {
      survey.questions[survey.questions.length] = req.body.survey.questions;
-    } else { // if no ownership, only updates answer
-    survey.questions.answers[survey.questions.answers.length] = req.body.survey.questions.answers;
-console.log("LOOK HERE", survey.questions.answers[survey.questions.answers.length]);
-console.log("AND HERE", req.body.survey.questions.answers);
-     console.log(req);
+  //  }
+//     } else { // if no ownership, only updates answer
+//     survey.questions.answers[survey.questions.answers.length] = req.body.survey.questions.answers;
+// console.log("LOOK HERE", survey.questions.answers[survey.questions.answers.length]);
+// console.log("AND HERE", req.body.survey.questions.answers);
+//      console.log(req);
 
-   }
+  //  }
 
   }
 
-}
+// }
       // Save the updated document back to the database
       survey.save(function (err, survey) {
             if (err) {
