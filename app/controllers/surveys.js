@@ -76,9 +76,6 @@ const update = (req, res, next) => {
   });
 };
 
-const updateAnswer = () {
-
-}
 
 const destroy = (req, res, next) => {
   req.survey.remove()
@@ -91,7 +88,6 @@ module.exports = controller({
   show,
   create,
   update,
-  updateAnswer,
   destroy,
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
