@@ -55,6 +55,8 @@ const update = (req, res, next) => {
      survey.questions[survey.questions.length] = req.body.survey.questions;
     } else {
      // if no ownership, only updates answer
+     console.log(req);
+
    }
     }
 
