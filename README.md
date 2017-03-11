@@ -4,20 +4,37 @@ This survey team project back end allows it's front end to have
 authorization, and to create, read, update, and delete users, surveys,
 questions, and answers.
 
-The base of this repository is a template which we built upon for this
-perticular app.
+## Team Members
+
+Maxime Dore
+Gabrielle Williams
+Zhu Chen
+Jana Ryndin
+
+
+## Tasks
+
+Make an app that can be used to create custom surveys and collect the responses
+on a dashboard for that particular survey.
+
 
 ## User Stories
 
-As a user I want to:
+####As a user I want to:
 -   Create a survey
 -   Add questions to my sureys
 -   Anwer anyone's survey questions
 -   Have a statistic about surveys
 
+
 ## ERD
 
-![ERD](put raw path here "ERD")
+1st ERD:
+![ERD1](put raw path here "1st ERD")
+
+2nd ERD:
+![ERD2](put raw path here "2nd ERD")
+
 
 ## Development
 
@@ -36,8 +53,3 @@ question to the survey array of question in the update controller.
 8. Used handlebars to diplay all surveys, questions, and answers.
 9. Began working on getting the "submit answer" to work which is also a PATCH on
 the survey. This was quite challenging.
-
-## Tasks
-
-Make an app that can be used to create custom surveys and collect the responses
-on a dashboard for that particular survey.
