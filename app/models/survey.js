@@ -12,9 +12,9 @@ const answerSchema = new mongoose.Schema({
 const questionSchema = new mongoose.Schema({
   problem: {
     type: String,
-    required: true,
+    required: false,
   },
-  answers: answerSchema
+  answers: [answerSchema]
 });
 
 const surveySchema = new mongoose.Schema({
