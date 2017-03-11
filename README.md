@@ -1,5 +1,3 @@
-[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
-
 # About
 
 This survey team project back end allows it's front end to have
@@ -8,6 +6,18 @@ questions, and answers.
 
 The base of this repository is a template which we built upon for this
 perticular app.
+
+## User Stories
+
+As a user I want to:
+-   Create a survey
+-   Add questions to my sureys
+-   Anwer anyone's survey questions
+-   Have a statistic about surveys
+
+## ERD
+
+![ERD](put raw path here "ERD")
 
 ## Development
 
@@ -31,9 +41,3 @@ the survey. This was quite challenging.
 
 Make an app that can be used to create custom surveys and collect the responses
 on a dashboard for that particular survey.
-
-#### Tasks Breakdown:
-
--   Have users
--   Have surveys, with questions and answers
--   Display the surveys
