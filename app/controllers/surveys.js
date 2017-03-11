@@ -52,17 +52,18 @@ const update = (req, res, next) => {
       // If that attribute isn't in the request body, default back to whatever it was before.
 
       // make an if to see if ownership is needed. If so, only create question
-      let surveyOwner = req.survey._owner;
-      let userId = req.user.id;
-      console.log("survey answer is ", (survey.questions[0].answers[0])!==null);
-      console.log(req.body.survey.questions);
+
+      // console.log(survey.questions[0].answers[0]);
+      // console.log("survey answer is ", survey.questions[0].answers[0]);
+      // console.log("request answer is ", req.body.survey.questions[0].answers);
 
 
       //  survey.questions[survey.questions.length] = req.body.survey.questions;
 
+
        for (let i=0; i<survey.questions.length; i++){
-         //
-         survey.questions[i] = req.body.survey.questions[i] || survey.questions[i];
+         let newAnswers = survey.questions[i].answers.length;
+         survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
        }
   }
 
