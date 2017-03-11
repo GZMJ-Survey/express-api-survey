@@ -13,14 +13,20 @@ const index = (req, res, next) => {
   Survey.find()
     .then(surveys => res.json({
       surveys: surveys.map((e) =>
-        e.toJSON({ virtuals: true, user: req.user })),
+        e.toJSON({
+          virtuals: true,
+          user: req.user
+        })),
     }))
     .catch(next);
 };
 
 const show = (req, res) => {
   res.json({
-    survey: req.survey.toJSON({ virtuals: true, user: req.user }),
+    survey: req.survey.toJSON({
+      virtuals: true,
+      user: req.user
+    }),
   });
 };
 
@@ -31,22 +37,25 @@ const create = (req, res, next) => {
   Survey.create(survey)
     .then(survey =>
       res.status(201)
-        .json({
-          survey: survey.toJSON({ virtuals: true, user: req.user }),
-        }))
+      .json({
+        survey: survey.toJSON({
+          virtuals: true,
+          user: req.user
+        }),
+      }))
     .catch(next);
 };
 
 const update = (req, res, next) => {
-  console.log('UPDATE');
-  delete req.body._owner;  // disallow owner reassignment.
+  // console.log('UPDATE');
+    // disallow owner reassignment.
 
-  Survey.findById(req.params.id, function (err, survey) {
+  Survey.findById(req.params.id, function(err, survey) {
     // Handle any possible database errors
-      // console.log(survey.questions.length);
-      // console.log((survey.questions).push(req.body.survey.questions));
+    // console.log(survey.questions.length);
+    // console.log((survey.questions).push(req.body.survey.questions));
     if (err) {
-        res.status(422).send(err);
+      res.status(422).send(err);
     } else {
       // Update each attribute with any possible attribute that may have been submitted in the body of the request
       // If that attribute isn't in the request body, default back to whatever it was before.
@@ -58,22 +67,28 @@ const update = (req, res, next) => {
       // console.log("request answer is ", req.body.survey.questions[0].answers);
 
 
-      //  survey.questions[survey.questions.length] = req.body.survey.questions;
+      // console.log(survey._owner == req.user.id);
 
+      if (survey._owner == req.user.id) {
+        survey.questions[survey.questions.length] = req.body.survey.questions;
 
-       for (let i=0; i<survey.questions.length; i++){
-         let newAnswers = survey.questions[i].answers.length;
-         survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
-       }
-  }
+      } else {
 
-      // Save the updated document back to the database
-      survey.save(function (err, survey) {
-            if (err) {
-                res.status(500).send(err);
-            }
-            res.send(survey);
-      });
+        for (let i = 0; i < survey.questions.length; i++) {
+          let newAnswers = survey.questions[i].answers.length;
+          survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+        }
+
+      }
+    }
+
+    // Save the updated document back to the database
+    survey.save(function(err, survey) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(survey);
+    });
 
   });
 };
@@ -91,9 +106,24 @@ module.exports = controller({
   create,
   update,
   destroy,
-}, { before: [
-  { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, only: ['index', 'show', 'update', 'create', 'destroy'] },
-  { method: setModel(Survey), only: ['show'] },
-  { method: setModel(Survey, { forUser: true }), only: ['update', 'destroy'] },
-], });
+}, {
+  before: [{
+      method: setUser,
+      only: ['index', 'show']
+    },
+    {
+      method: authenticate,
+      only: ['index', 'show', 'update', 'create', 'destroy']
+    },
+    {
+      method: setModel(Survey),
+      only: ['show']
+    },
+    {
+      method: setModel(Survey, {
+        forUser: true
+      }),
+      only: ['destroy']
+    },
+  ],
+});
