@@ -30,10 +30,10 @@ on a dashboard for that particular survey.
 ## ERD
 
 1st ERD:
-![ERD1](put raw path here "1st ERD")
+![ERD1](ERD1.jpg "1st ERD")
 
 2nd ERD:
-![ERD2](put raw path here "2nd ERD")
+![ERD2](ERD2.JPG "2nd ERD")
 
 
 ## Development
