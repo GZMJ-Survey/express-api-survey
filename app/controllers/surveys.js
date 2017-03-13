@@ -64,10 +64,11 @@ const update = (req, res, next) => {
 
       } else {
         // console.log(typeof survey._owner, survey._owner, typeof req.user.id);
-        console.log(survey.questions);
+        console.log('survey.questions is:', typeof survey.questions, survey.questions);
         for (let i = 0; i < survey.questions.length; i++) {
-          let newAnswers = survey.questions[i].answers.length;
-          survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+          console.log(survey.questions);
+          // let newAnswers = survey.questions[i].answers.length;
+          // survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
         }
 
       }
