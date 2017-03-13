@@ -63,21 +63,12 @@ const update = (req, res, next) => {
         survey.questions[survey.questions.length] = req.body.survey.questions;
 
       } else {
-        // console.log('else block req.body.survey', req.body.survey);
-
+        console.log("before for loop", req.body.survey.questions);
+        console.log("length is ", survey.questions.length);
         for (let i = 0; i < survey.questions.length; i++) {
-          // console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
           let newAnswers = survey.questions[i].answers.length;
-          // console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
-          // console.log('if:', survey.questions[i].answers[newAnswers]===undefined);
-          // console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
-
-          if (survey.questions[i].answers[newAnswers]===undefined) {
-            const response = req.body.survey.questions[i].answers.response;
-             survey.questions[i].answers[newAnswers] = response === 'true' ? true : false;
-          } else {
+          console.log("inside for loop", i, req.body.survey.questions);
           survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
-          }
         }
 
       }
