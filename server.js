@@ -97,8 +97,7 @@ const onListening = () =>  {
 
 server.on('error', onError);
 server.on('listening', onListening);
-// server.listen(port);
-server.listen(process.env.PORT);
+server.listen(port);
 
 module.exports = {
   server,

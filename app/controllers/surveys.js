@@ -64,15 +64,15 @@ const update = (req, res, next) => {
 
       } else {
         // console.log('else block req.body.survey', req.body.survey);
+        console.log(req.body.survey.questions.length);
         for (let i = 0; i < survey.questions.length; i++) {
           // console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
           let newAnswers = survey.questions[i].answers.length;
-          console.log(newAnswers);
           // console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
           // console.log('if:', survey.questions[i].answers[newAnswers]===undefined);
           // console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
           // if (survey.questions[i].answers[newAnswers]===undefined) {
-            //  console.log(survey.questions[i].answers[newAnswers] = req.body.survey.questions[i].answers);
+             console.log(survey.questions[i].answers[newAnswers] = req.body.survey.questions[i].answers);
           // } else {
           // survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
           // }
