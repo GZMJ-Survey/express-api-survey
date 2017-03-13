@@ -53,3 +53,10 @@ question to the survey array of question in the update controller.
 8. Used handlebars to diplay all surveys, questions, and answers.
 9. Began working on getting the "submit answer" to work which is also a PATCH on
 the survey. This was quite challenging.
+10. Then added 'add question form' to survey handlebars, so it would display on each survey.
+11. Made sure only the author of the survey could add questions or delete
+12. For each action, had the survey index function run afterwards to update surveys.
+13. Fixed sign up confirmation bug.
+14. Added message div to display whether each action was a success or failure.
+15. Displayed each survey stats.
+16. Deployed.
