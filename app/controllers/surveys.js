@@ -52,28 +52,19 @@ const update = (req, res, next) => {
 
   Survey.findById(req.params.id, function(err, survey) {
     // Handle any possible database errors
-    // console.log(survey.questions.length);
-    // console.log((survey.questions).push(req.body.survey.questions));
     if (err) {
       res.status(422).send(err);
     } else {
+
       // Update each attribute with any possible attribute that may have been submitted in the body of the request
       // If that attribute isn't in the request body, default back to whatever it was before.
-
-      // make an if to see if ownership is needed. If so, only create question
-
-      // console.log(survey.questions[0].answers[0]);
-      // console.log("survey answer is ", survey.questions[0].answers[0]);
-      // console.log("request answer is ", req.body.survey.questions[0].answers);
-
-
-      // console.log(survey._owner == req.user.id);
-
       if (survey._owner == req.user.id) {
+
         survey.questions[survey.questions.length] = req.body.survey.questions;
 
       } else {
-
+        // console.log(typeof survey._owner, survey._owner, typeof req.user.id);
+        console.log(survey.questions);
         for (let i = 0; i < survey.questions.length; i++) {
           let newAnswers = survey.questions[i].answers.length;
           survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
