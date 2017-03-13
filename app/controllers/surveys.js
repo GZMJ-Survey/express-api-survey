@@ -63,13 +63,12 @@ const update = (req, res, next) => {
         survey.questions[survey.questions.length] = req.body.survey.questions;
 
       } else {
-        // console.log(typeof survey._owner, survey._owner, typeof req.user.id);
-        console.log('survey.questions is:', typeof survey.questions, survey.questions);
-        console.log('length: ', survey.questions.length);
-        console.log('req.body.survey', req.body.survey);
         for (let i = 0; i < survey.questions.length; i++) {
-          // let newAnswers = survey.questions[i].answers.length;
-          // survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+          console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
+          let newAnswers = survey.questions[i].answers.length;
+          console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
+          console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
+          survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
         }
 
       }
