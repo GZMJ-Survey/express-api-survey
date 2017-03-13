@@ -63,17 +63,13 @@ const update = (req, res, next) => {
         survey.questions[survey.questions.length] = req.body.survey.questions;
 
       } else {
-        // console.log('else block req.body.survey', req.body.survey);
+        console.log('else block req.body.survey', req.body.survey);
         for (let i = 0; i < survey.questions.length; i++) {
-          // console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
+          console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
           let newAnswers = survey.questions[i].answers.length;
-          // console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
-          // console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
-          if (survey.questions[i].answers[newAnswers] === undefined) {
-            survey.questions[i].answers[newAnswers] = req.body.survey.questions[i].answers;
-          } else {
-            survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
-          }
+          console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
+          console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
+          survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
         }
 
       }
