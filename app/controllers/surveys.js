@@ -71,8 +71,10 @@ const update = (req, res, next) => {
           // console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
           // console.log('if:', survey.questions[i].answers[newAnswers]===undefined);
           // console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
+
           if (survey.questions[i].answers[newAnswers]===undefined) {
-             survey.questions[i].answers[newAnswers] = {response: true };
+            const response = req.body.survey.questions[i].answers.response;
+             survey.questions[i].answers[newAnswers] = response === 'true' ? true : false;
           } else {
           survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
           }
