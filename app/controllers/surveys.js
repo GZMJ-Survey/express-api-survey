@@ -68,7 +68,7 @@ const update = (req, res, next) => {
           console.log('survey.questions[i].answers.length', survey.questions[i].answers.length);
           let newAnswers = survey.questions[i].answers.length;
           console.log('survey.questions[i].answers[newAnswers]', survey.questions[i].answers[newAnswers]);
-          console.log('req.body.survey.questions[i].answers', req.body.survey.questionsM[i].answers);
+          console.log('req.body.survey.questions[i].answers', req.body.survey.questions[i].answers);
           survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
         }
 
