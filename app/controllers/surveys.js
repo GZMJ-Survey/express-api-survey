@@ -7,7 +7,7 @@ const Survey = models.survey;
 const authenticate = require('./concerns/authenticate');
 const setUser = require('./concerns/set-current-user');
 const setModel = require('./concerns/set-mongoose-model');
-const store = require('./store.js');
+
 
 const index = (req, res, next) => {
   Survey.find()
@@ -47,7 +47,6 @@ const create = (req, res, next) => {
 };
 
 const update = (req, res, next) => {
-  // console.log('UPDATE');
     // disallow owner reassignment.
 
   Survey.findById(req.params.id, function(err, survey) {
@@ -63,12 +62,28 @@ const update = (req, res, next) => {
         survey.questions[survey.questions.length] = req.body.survey.questions;
 
       } else {
-        console.log("before for loop", req.body.survey.questions);
-        console.log("length is ", survey.questions.length);
-        for (let i = 0; i < survey.questions.length; i++) {
-          let newAnswers = survey.questions[i].answers.length;
-          console.log("inside for loop", i, req.body.survey.questions);
-          survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+
+        if ('survey' in req.body) {
+          if ('questions' in req.body.survey) {
+
+            if (survey.questions.length===req.body.survey.questions.length) {
+
+              let allDefined = 0;
+              for (let k = 0; k < survey.questions.length; k++) {
+                if (req.body.survey.questions[k].answers.response!==undefined){
+                  allDefined++;
+                }
+              }
+
+              if (allDefined === survey.questions.length){
+                for (let i = 0; i < survey.questions.length; i++) {
+                  let newAnswers = survey.questions[i].answers.length;
+                  survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+                }
+              }
+            }
+
+          }
         }
 
       }
