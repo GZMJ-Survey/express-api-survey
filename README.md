@@ -47,8 +47,10 @@ const surveySchema = new mongoose.Schema({
 });
 ```
 
-The Create, Read, and Destroy actions were easy to tackle but our team worked on the update survey action for hours. To add questions to a survey and to submit answers for the survey require the update action, so our team needed to spend a lot of time on viewing how information that was stored in arrays inside of arrays could be accessed and also updated. We had to log different parts of the array to find out where the information was being stored and what piece of the array we needed. In the end, our update function was this
+The Create, Read, and Destroy actions were easy to tackle but our team worked on the update survey action for hours. To add questions to a survey and to submit answers for the survey require the update action, so our team needed to spend a lot of time on viewing how information that was stored in arrays inside of arrays could be accessed and also updated. We had to log different parts of the array to find out where the information was being stored and what piece of the array we needed.
 
+
+We started with an update function like this,
 ```
 const update = (req, res, next) => {
   // console.log('UPDATE');
@@ -81,6 +83,64 @@ const update = (req, res, next) => {
         for (let i = 0; i < survey.questions.length; i++) {
           let newAnswers = survey.questions[i].answers.length;
           survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+        }
+
+      }
+    }
+
+    // Save the updated document back to the database
+    survey.save(function(err, survey) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(survey);
+    });
+
+  });
+};
+```
+but this was causing errors and crashing the server because there were undefined pieces of the array we were trying to pull information from.
+In the end, our final update function was as follows,
+
+```
+const update = (req, res, next) => {
+    // disallow owner reassignment.
+
+  Survey.findById(req.params.id, function(err, survey) {
+    // Handle any possible database errors
+    if (err) {
+      res.status(422).send(err);
+    } else {
+
+      // Update each attribute with any possible attribute that may have been submitted in the body of the request
+      // If that attribute isn't in the request body, default back to whatever it was before.
+      if (survey._owner == req.user.id) {
+
+        survey.questions[survey.questions.length] = req.body.survey.questions;
+
+      } else {
+
+        if ('survey' in req.body) {
+          if ('questions' in req.body.survey) {
+
+            if (survey.questions.length===req.body.survey.questions.length) {
+
+              let allDefined = 0;
+              for (let k = 0; k < survey.questions.length; k++) {
+                if (req.body.survey.questions[k].answers.response!==undefined){
+                  allDefined++;
+                }
+              }
+
+              if (allDefined === survey.questions.length){
+                for (let i = 0; i < survey.questions.length; i++) {
+                  let newAnswers = survey.questions[i].answers.length;
+                  survey.questions[i].answers[newAnswers] = survey.questions[i].answers[newAnswers] || req.body.survey.questions[i].answers;
+                }
+              }
+            }
+
+          }
         }
 
       }
