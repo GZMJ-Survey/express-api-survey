@@ -1,9 +1,9 @@
 ## Links
-DEPLOYED FRONT END: https://gzmj-survey.github.io/client-survey/
+[DEPLOYED FRONT END](https://gzmj-survey.github.io/client-survey/)
 
-FRONT END REPO: https://github.com/GZMJ-Survey/client-survey
+[FRONT END REPO] (https://github.com/GZMJ-Survey/client-survey)
 
-HEROKU: https://murmuring-meadow-73234.herokuapp.com/
+[HEROKU] (https://murmuring-meadow-73234.herokuapp.com/)
 
 ## Team Members
 
