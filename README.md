@@ -352,6 +352,8 @@ DELETE | `/surveys/:id` | `surveys#destroy`
 ### POST / survey create
 
 ```sh
+#!/bin/bash
+
 API="http://localhost:4741"
 URL_PATH="/surveys"
 
@@ -362,18 +364,15 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "survey":{
-      "title": "ananan",
-      "questions": [{
-        "problem": "sasjns"
-      }, {
-        "problem": "hello"
-      }]
+      "title": "ananan"
     }
   }'
+
+echo
 ```
 
 ```sh
-TOKEN='YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=' TITLE='max survey' sh scripts/survey-create.sh
+TOKEN="aHkOLxDmOlUawYaPDFJZx/LZM77rYLx/rc6tXb1sp2c=--7XJ1hXhSE17ghaYrHRrs/GFVmoRVd/BNptpd6uEOMoc=" sh scripts/survey-create.sh
 ```
 
 response
@@ -382,18 +381,9 @@ response
 HTTP/1.1 201 Created
 ```
 
-```{
-  "survey": {
-    "title":"ananan",
-    "questions":
-    [{
-      "problem":"sasjns",
-      {
-      "problem":"hello",
-      }]
-    }
-  }
-}
+```
+{"survey":{"__v":0,"updatedAt":"2017-03-22T21:20:09.792Z","createdAt":"2017-03-22T21:20:09.792Z","title":"ananan","_owner":"58c049f433600f6cbd2589bf","_id":"58d2ea89ee5b1e78c7990165","questions":[],"id":"58d2ea89ee5b1e78c7990165","editable":true}}
+
 ```
 
 
@@ -410,7 +400,7 @@ curl "${API}${URL_PATH}" \
 ```
 
 ```sh
-TOKEN='YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=' sh scripts/survey-index.sh
+TOKEN="3fj7+6/gndFDGBaH/heDRYxnqhVdX5yfQC92BcPI4E4=--oQB/Y4jk0/UxUzvOUAh2+iI5nms+m1IQkusy6792bl0=" sh scripts/survey-index.sh
 ```
 
 response
@@ -419,31 +409,7 @@ response
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
-{
-  "surveys":[{
-    "_id":"58c5a28ad4e8c23488fc1004",
-    "title":"mnnjn",
-    "_owner":"58c0413d824f6b688cd5824c",
-    "questions":[{
-      "problem":"sddsf",
-      "_id":"58c608781c317b122abb0533",
-      "answers":[{
-        "response":true,
-        "_id":"58c6095f1c317b122abb053c"
-        },
-        {
-        "response":true,
-        "_id":"58c609621c317b122abb053d"
-        }
-        }],
-      },
-      {
-      "problem":"sddsf",
-      "_id":"58c618e150dbea2177f44468",
-      "answers":[]
-      }]
-      ]
-}
+{"surveys":[{"_id":"58d2ef91ee5b1e78c799016c","updatedAt":"2017-03-22T21:41:37.676Z","createdAt":"2017-03-22T21:41:37.676Z","title":"ananan","_owner":"58c049f433600f6cbd2589bf","__v":0,"questions":[],"id":"58d2ef91ee5b1e78c799016c","editable":true}]}
 ```
 
 ### GET / survey show
@@ -459,7 +425,7 @@ curl "${API}${URL_PATH}/${ID}" \
 ```
 
 ```sh
-ID=58c5a28ad4e8c23488fc1004 TOKEN='YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=' sh scripts/survey-show.sh
+TOKEN="3fj7+6/gndFDGBaH/heDRYxnqhVdX5yfQC92BcPI4E4=--oQB/Y4jk0/UxUzvOUAh2+iI5nms+m1IQkusy6792bl0=" ID="58d2ef91ee5b1e78c799016c" sh scripts/survey-show.sh
 ```
 
 response
@@ -468,36 +434,15 @@ response
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
-{
-  "surveys":[{
-    "_id":"58c5a28ad4e8c23488fc1004",
-    "title":"mnnjn",
-    "_owner":"58c0413d824f6b688cd5824c",
-    "questions":[{
-      "problem":"sddsf",
-      "_id":"58c608781c317b122abb0533",
-      "answers":[{
-        "response":true,
-        "_id":"58c6095f1c317b122abb053c"
-      },
-      {
-        "response":true,
-        "_id":"58c609621c317b122abb053d"
-      }
-    }],
-  },
-  {
-    "problem":"sddsf",
-    "_id":"58c618e150dbea2177f44468",
-    "answers":[]
-  }]
-  ]
-}
+{"survey":{"_id":"58d2ef91ee5b1e78c799016c","updatedAt":"2017-03-22T21:41:37.676Z","createdAt":"2017-03-22T21:41:37.676Z","title":"ananan","_owner":"58c049f433600f6cbd2589bf","__v":0,"questions":[],"id":"58d2ef91ee5b1e78c799016c","editable":true}}
 ```
 
-### PATCH / survey update
+### PATCH / survey update, add question
 
+Ran same script but changed questions and both questions were added to the survey
 ```sh
+#!/bin/bash
+
 API="http://localhost:4741"
 URL_PATH="/surveys"
 
@@ -508,15 +453,74 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "survey": {
-      "title": "somsagnggrgre",
+      "questions": {
+        "problem": "Is it raining?"
+      }
+    }
+  }'
+
+echo
+```
+```sh
+#!/bin/bash
+
+API="http://localhost:4741"
+URL_PATH="/surveys"
+
+curl "${API}${URL_PATH}/${ID}" \
+  --include \
+  --request PATCH \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}" \
+  --data '{
+    "survey": {
+      "questions": {
+        "problem": "Is it sunny?"
+      }
+    }
+  }'
+
+echo
+```
+
+```sh
+TOKEN="aHkOLxDmOlUawYaPDFJZx/LZM77rYLx/rc6tXb1sp2c=--7XJ1hXhSE17ghaYrHRrs/GFVmoRVd/BNptpd6uEOMoc=" ID="58d2ea89ee5b1e78c7990165" sh scripts/survey-question-update.sh
+```
+
+response
+
+```markdown
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"_id":"58d2ea89ee5b1e78c7990165","updatedAt":"2017-03-22T21:23:14.321Z","createdAt":"2017-03-22T21:20:09.792Z","title":"ananan","_owner":"58c049f433600f6cbd2589bf","__v":2,"questions":[{"problem":"Is it sunny?","_id":"58d2eb2fee5b1e78c7990166","answers":[]},{"problem":"Is it raining?","_id":"58d2eb42ee5b1e78c7990167","answers":[]}],"id":"58d2ea89ee5b1e78c7990165","editable":false}
+```
+
+
+
+#### PATCH / same survey, answer update
+
+To answer survey questions, need to sign in as different user because the author of the survey cannot answer the questions.
+
+```sh
+#!/bin/bash
+
+API="http://localhost:4741"
+URL_PATH="/surveys"
+
+curl "${API}${URL_PATH}/${ID}" \
+  --include \
+  --request PATCH \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}" \
+  --data '{
+    "survey": {
       "questions": [{
-        "problem": "Is it sunny?",
         "answers": {
           "response": false
         }
       },
       {
-        "problem": "Is it snowing?",
         "answers": {
           "response": false
         }
@@ -525,88 +529,19 @@ curl "${API}${URL_PATH}/${ID}" \
       ]
     }
   }'
+
+echo
 ```
 
 ```sh
-ID=58c5a28ad4e8c23488fc1004 TOKEN='YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=' sh scripts/survey-update.sh
-```
-
-response
-
-```markdown
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "surveys":[{
-    "_id":"58c5a28ad4e8c23488fc1004",
-    "title":"somsagnggrgre",
-    "_owner":"58c0413d824f6b688cd5824c",
-    "questions": [{
-      "problem":"Is it sunny?",
-      "_id":"58c608781c317b122abb0533",
-      "answers": [{
-        "response":false
-      },
-      {
-        "response":true
-      }
-      }],
-    },
-    {
-      "problem":"Is it snowing?",
-      "_id":"58c618e150dbea2177f44468",
-      "answers": {
-        "response": false
-      }
-    }]
-  ]
-}
-```
-
-#### PATCH / same survey, question create
-
-```sh
-API="http://localhost:4741"
-URL_PATH="/surveys"
-
-curl "${API}${URL_PATH}" \
-  --include \
-  --request PATCH \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Token token=${TOKEN}" \
-  --data '{
-    "survey": {
-      "title": "Anything",
-      "questions": [{
-        "problem": "Is it sunny?",
-        "answers": [{
-          "response": false
-        }]
-      }]
-    }
-  }'
-```
-
-```sh
-ID=58c60cad1c317b122abb0544 TOKEN="YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=" sh scripts/survey-update.sh
+ TOKEN="hB5EzZ534us5Ri0qHB/3PJ9dIAHn8SMG9Tzmp51s3b8=--Zm3f+C1QHyAkc8H/zMH8vLD2LyWMGI6MwMldx0t7tPA=" ID="58d2ea89ee5b1e78c7990165" sh scripts/survey-answer-update.sh
 ```
 response
 ```markdown
 HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-{
-  "survey": {
-    "title": "Anything",
-    "questions": [{
-      "problem": "Is it sunny?",
-      "answers": [{
-        "response": false
-      }]
-    }]
-  }
-  }
-}
+
+{"_id":"58d2ea89ee5b1e78c7990165","updatedAt":"2017-03-22T21:25:48.280Z","createdAt":"2017-03-22T21:20:09.792Z","title":"ananan","_owner":"58c049f433600f6cbd2589bf","__v":3,"questions":[{"problem":"Is it sunny?","_id":"58d2eb2fee5b1e78c7990166","answers":[{"response":false,"_id":"58d2ebdcee5b1e78c799016a"}]},{"problem":"Is it raining?","_id":"58d2eb42ee5b1e78c7990167","answers":[{"response":false,"_id":"58d2ebdcee5b1e78c799016b"}]}],"id":"58d2ea89ee5b1e78c7990165","editable":false}
+
 ```
 
 #### DELETE / survey destroy
@@ -622,7 +557,7 @@ curl "${API}${URL_PATH}/${ID}" \
 ```
 
 ```sh
-ID=58cab2120ccb66307a4757d8 TOKEN='YrNiW55CmLrhXR75TVeYMwOKBFOhqQ1e6FfmUCdgJWg=--wKFI9JQP1nfLCW7+4VluW1NUq45mK5slQtnSRf5IqXA=' sh scripts/survey-destroy.sh
+TOKEN="3fj7+6/gndFDGBaH/heDRYxnqhVdX5yfQC92BcPI4E4=--oQB/Y4jk0/UxUzvOUAh2+iI5nms+m1IQkusy6792bl0=" ID="58d2ea89ee5b1e78c7990165" sh scripts/survey-destroy.sh
 ```
 
 response
